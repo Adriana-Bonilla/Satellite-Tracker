@@ -25,3 +25,13 @@ class SatelliteTracker:
             "distance_km": distance.km,
             "is_visible": alt.degrees > 0
         }
+
+    def get_ground_position(self):
+        t = self.ts.now()
+        geocentric = self.satellite.at(t)
+        subpoint = wgs84.subpoint(geocentric)
+
+        return {
+            "latitude": subpoint.latitude.degrees,
+            "longitude": subpoint.longitude.degrees
+        }
